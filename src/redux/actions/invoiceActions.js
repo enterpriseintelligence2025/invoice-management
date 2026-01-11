@@ -1,6 +1,8 @@
 import axios from "axios"
 import { GENERATE_INVOICE_REQUEST, GENERATE_INVOICE_SUCCESS, GENERATE_INVOICE_FAIL, RECONCILIATION_REQUEST, RECONCILIATION_SUCCESS, RECONCILIATION_FAIL } from "../constants/invoiceConstants"
 
+const BASE_API_URL = import.meta.env.VITE_BACKEND_BASE_URL || "http://localhost:8000"
+
 export const generateInvoiceAPI = (file) => async (dispatch) => {
   try {
     dispatch({ type: GENERATE_INVOICE_REQUEST })
@@ -9,7 +11,7 @@ export const generateInvoiceAPI = (file) => async (dispatch) => {
     formData.append("file", file)
 
     const { data } = await axios.post(
-      "http://localhost:9000/invoice/generate",
+      `${BASE_API_URL}/invoice/generate`,
       formData,
       {
         headers: {
@@ -205,7 +207,7 @@ export const reconcileAPI = (poFile, invoiceFile) => async (dispatch) => {
     formData.append("invoice", invoiceFile)
 
     const { data } = await axios.post(
-      "http://localhost:9000/reconcile",
+      `${BASE_API_URL}/reconcile`,
       formData,
       {
         headers: {
